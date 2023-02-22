@@ -2,6 +2,7 @@ import type { Application } from '../../shared-types';
 import express, { Request, Response } from 'express';
 import {
     ApplicationCreateArgs,
+    ApplicationUpdateArgs,
     ApplicationDataStore,
 } from './application.datastore';
 
@@ -41,6 +42,26 @@ applicationRouter.post(
             const newApplication = datastore.create(args);
 
             res.status(200).send(newApplication);
+        } catch (e: any) {
+            res.status(500).send(e.message);
+        }
+    }
+);
+
+applicationRouter.post(
+    '/update',
+    async (
+        req: Request<any, any, ApplicationUpdateArgs>,
+        res: Response<Application | null>
+    ) => {
+        try {
+            console.log('HELLO');
+            const args = req.body;
+            console.log(args.application.id);
+            //TODO: delete console logging later
+            datastore.update(args);
+             const app = await datastore.getById(args.application.id);
+            res.status(200).send(app);
         } catch (e: any) {
             res.status(500).send(e.message);
         }
