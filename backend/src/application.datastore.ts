@@ -6,6 +6,10 @@ export interface ApplicationCreateArgs {
     carriers: string[];
 }
 
+export interface ApplicationUpdateArgs {
+    application: Application;
+}
+
 export enum ValidCarriers {
     Chubb = 'chubb',
     CNA = 'cna',
@@ -26,6 +30,13 @@ export class ApplicationDataStore {
         };
         this.data.set(newApp.id, newApp);
         return newApp;
+    }
+
+    public update(args: ApplicationUpdateArgs): void {
+        console.log('HELLO2');
+        console.log(args);
+        this.data.set(args.application.id, args.application);
+        //error handling?
     }
 
     public getById(id: string): Application | null {
