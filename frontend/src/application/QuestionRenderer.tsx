@@ -14,9 +14,10 @@ const updateAnswer = () => {};
 
 export const QuestionRenderer: React.VFC<Props> = (props) => {
   const {question} = props;
-  const handleChange = () => {
-    console.log("inside handle");
+  const handleChange = (value: string) => {
+    console.log(value);
   };
+
   const FieldComponent =
     question.componentType === "text" ? (
       <TextField question={question} />
