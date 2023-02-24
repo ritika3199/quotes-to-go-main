@@ -27,6 +27,7 @@ export const SectionRenderer: React.VFC<Props> = (props) => {
         }
         return (
           <QuestionRenderer
+            currentSection={props.section}
             key={child.id}
             question={child}
             depth={props.depth + 1}

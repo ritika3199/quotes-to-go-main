@@ -1,7 +1,8 @@
 import {Box, BoxProps, Button, Typography} from "@mui/material";
 import {Application} from "../../shared-types";
 import {SectionRenderer} from "./application/SectionRenderer";
-import React from "react";
+import React, {useState} from "react";
+import ApplicationContext from "./ApplicationContext";
 
 interface Props {
   application: Application;
@@ -23,18 +24,20 @@ export const MainContent: React.VFC<Props> = ({
   ));
 
   return (
-    <Box style={style}>
-      <Typography variant="h1">Quotes To Go</Typography>
-      <Typography variant="body1">Quotes You Can Take With You</Typography>
-      <Box>{rootSections}</Box>
-      <Button
-        variant="outlined"
-        onClick={() => {
-          onSubmit(currentApp);
-        }}
-      >
-        Submit
-      </Button>
-    </Box>
+    <ApplicationContext.Provider value={application}>
+      <Box style={style}>
+        <Typography variant="h1">Quotes To Go</Typography>
+        <Typography variant="body1">Quotes You Can Take With You</Typography>
+        <Box>{rootSections}</Box>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            onSubmit(currentApp);
+          }}
+        >
+          Submit
+        </Button>
+      </Box>
+    </ApplicationContext.Provider>
   );
 };

@@ -25,14 +25,9 @@ interface Props {
 }
 
 export const RadioBooleanField: React.VFC<Props> = ({question, onChange}) => {
-  //   const [selected, setSelected] = React.useState("");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(event.target.value);
-    // setSelected((event.target as HTMLInputElement).value);
-    console.log((event.target as HTMLInputElement).value);
     onChange((event.target as HTMLInputElement).value);
   };
-
   return (
     <FormControl component="fieldset">
       <FormLabel className="question">{question.displayText}</FormLabel>

@@ -4,18 +4,44 @@ import {RadioBooleanField} from "./RadioBooleanField";
 import {SectionRenderer} from "./SectionRenderer";
 import {SelectField} from "./SelectField";
 import {TextField} from "./TextField";
-import React from "react";
+import React, {useContext} from "react";
+import ApplicationContext from "../ApplicationContext";
+import {ApplicationSection} from "../../../shared-types";
+import {ContentCopy} from "@mui/icons-material";
 
 interface Props {
+  currentSection: ApplicationSection;
+  key?: string;
   question: ApplicationQuestion;
   depth: number;
 }
-const updateAnswer = () => {};
 
 export const QuestionRenderer: React.VFC<Props> = (props) => {
   const {question} = props;
+  const application = useContext(ApplicationContext);
+
   const handleChange = (value: string) => {
-    console.log(value);
+    const sectionIndex = application?.content.findIndex((section) => {
+      return section.id === props.currentSection.id;
+    });
+
+    const questionIndex = application.content[sectionIndex].children?.findIndex(
+      (nodes) => {
+        return nodes.type === "Question" && nodes.id === props.question.id;
+      }
+    );
+    application.content[sectionIndex].children?.map((node) => {
+      if (
+        node.type === "Question" &&
+        node.id === props.question.id &&
+        questionIndex
+      ) {
+        const content = application.content[sectionIndex];
+        if (content.children != null) {
+          content.children[questionIndex].userAnswer = value;
+        }
+      }
+    });
   };
 
   const FieldComponent =
@@ -42,6 +68,7 @@ export const QuestionRenderer: React.VFC<Props> = (props) => {
         return (
           <QuestionRenderer
             key={child.id}
+            currentSection={props.currentSection}
             question={child}
             depth={props.depth + 1}
           />

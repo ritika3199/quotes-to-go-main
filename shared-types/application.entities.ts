@@ -29,6 +29,9 @@ export interface ApplicationSection {
 
     // An array of ApplicationConditions is considered to be an AND filter
     conditions?: ApplicationCondition[];
+  
+    // User entered input.
+    userAnswer?: string;
 }
 
 /*
@@ -44,6 +47,9 @@ export interface ApplicationQuestion {
     componentType?: ApplicationComponentType;
 
     options?: string[];
+
+    // User entered input.
+    userAnswer?: string;
 
     // Questions may have children too - can be useful to organize chains of dependent questions
     children?: ApplicationNode[];
