@@ -44,7 +44,6 @@ function getQuestionsFromNode(node: ApplicationNode): ApplicationQuestion[] {
 
 //create state here for Application
 export const MainContent: React.VFC<Props> = ({application, style}) => {
-  const [currentApp, setCurrentApp] = React.useState<Application>(application);
   const rootSections = application?.content.map((section) => (
     <SectionRenderer key={section.id} section={section} depth={0} />
   ));
@@ -106,8 +105,6 @@ export const MainContent: React.VFC<Props> = ({application, style}) => {
   return (
     <ApplicationContext.Provider
       value={{
-        currentApp,
-        setCurrentApp,
         questionToAnswers: questionsToAnswerMap,
         setQuestionAnswerCallback: questionCallback,
       }}
@@ -116,11 +113,11 @@ export const MainContent: React.VFC<Props> = ({application, style}) => {
         <Typography variant="h1">Quotes To Go</Typography>
         <Typography variant="body1">Quotes You Can Take With You</Typography>
         <Box>{rootSections}</Box>
-        {currentApp != null && (
+        {application != null && (
           <Button
             variant="outlined"
             onClick={() => {
-              handleSubmit(currentApp);
+              handleSubmit(application);
             }}
           >
             Submit
