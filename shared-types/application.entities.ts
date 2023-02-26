@@ -8,54 +8,54 @@
 
 */
 export interface Application {
-    id: string;
+  id: string;
 
-    carriers: string[];
+  carriers: string[];
 
-    content: ApplicationSection[];
+  content: ApplicationSection[];
 }
 
 /* 
   An ApplicationSection is essentially a bucket with a header (label) and an array of children underneath it
 */
 export interface ApplicationSection {
-    id: string;
+  id: string;
 
-    type: 'Section';
+  type: "Section";
 
-    title?: string;
+  title?: string;
 
-    children?: ApplicationNode[];
+  children?: ApplicationNode[];
 
-    // An array of ApplicationConditions is considered to be an AND filter
-    conditions?: ApplicationCondition[];
-  
-    // User entered input.
-    userAnswer?: string;
+  // An array of ApplicationConditions is considered to be an AND filter
+  conditions?: ApplicationCondition[];
+
+  // User entered input.
+  userAnswer?: string;
 }
 
 /*
   An ApplicationQuestion is 
 */
 export interface ApplicationQuestion {
-    id: string;
+  id: string;
 
-    type: 'Question';
+  type: "Question";
 
-    displayText: string;
+  displayText: string;
 
-    componentType?: ApplicationComponentType;
+  componentType?: ApplicationComponentType;
 
-    options?: string[];
+  options?: string[];
 
-    // User entered input.
-    userAnswer?: string;
+  // User entered input.
+  answer?: string;
 
-    // Questions may have children too - can be useful to organize chains of dependent questions
-    children?: ApplicationNode[];
+  // Questions may have children too - can be useful to organize chains of dependent questions
+  children?: ApplicationNode[];
 
-    // An array of ApplicationConditions is considered to be an AND filter
-    conditions?: ApplicationCondition[];
+  // An array of ApplicationConditions is considered to be an AND filter
+  conditions?: ApplicationCondition[];
 }
 
 // Union type of Section and Question
@@ -68,16 +68,16 @@ export type ApplicationNode = ApplicationQuestion | ApplicationSection;
   then the Question/Section should be displayed
 */
 export interface ApplicationCondition {
-    subjectId: string;
+  subjectId: string;
 
-    displayIfEquals: string | boolean;
+  displayIfEquals: string | boolean;
 }
 
 /*
   Right now, we can slim down the number of front-end components we support to Text, Radio and Selects
 */
 export enum ApplicationComponentType {
-    Text = 'text',
-    RadioBoolean = 'radioBoolean',
-    Select = 'select',
+  Text = "text",
+  RadioBoolean = "radioBoolean",
+  Select = "select",
 }

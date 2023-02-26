@@ -5,19 +5,27 @@ import {
   ListItemText,
   MenuItem,
   Select as MuiSelect,
+  SelectChangeEvent,
   SelectProps,
 } from "@mui/material";
-import React from "react";
+import React, {ReactNode} from "react";
 interface Props {
   question: ApplicationQuestion;
-  onChange?: () => void;
+  onChange: (value: string) => void;
 }
 
 export const SelectField: React.VFC<Props> = ({question, onChange}) => {
+  const handleChange = (event: SelectChangeEvent<string>, child: ReactNode) => {
+    onChange(event.target.value);
+  };
   return (
     <FormControl variant="standard" fullWidth>
       <InputLabel>{question.displayText}</InputLabel>
-      <MuiSelect style={selectStyles}>
+      <MuiSelect
+        style={selectStyles}
+        onChange={handleChange}
+        defaultValue={question.answer}
+      >
         {question.options?.map((option) => (
           <MenuItem key={option} value={option}>
             <ListItemText primary={option} />

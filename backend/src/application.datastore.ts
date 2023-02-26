@@ -1,49 +1,47 @@
-import type { Application, ApplicationSection } from '../../shared-types';
-import { v4 as uuid } from 'uuid';
-import BaseCurationApplication from './data/curation-application.json';
+import type {Application, ApplicationSection} from "../../shared-types";
+import {v4 as uuid} from "uuid";
+import BaseCurationApplication from "./data/curation-application.json";
 
 export interface ApplicationCreateArgs {
-    carriers: string[];
+  carriers: string[];
 }
 
 export interface ApplicationUpdateArgs {
-    application: Application;
+  application: Application;
 }
 
 export enum ValidCarriers {
-    Chubb = 'chubb',
-    CNA = 'cna',
-    TheHartford = 'hartford',
+  Chubb = "chubb",
+  CNA = "cna",
+  TheHartford = "hartford",
 }
 
 export class ApplicationDataStore {
-    private data: Map<string, Application>;
-    constructor() {
-        this.data = new Map<string, Application>();
-    }
+  private data: Map<string, Application>;
+  constructor() {
+    this.data = new Map<string, Application>();
+  }
 
-    public create(args: ApplicationCreateArgs): Application {
-        const newApp = {
-            id: uuid(),
-            carriers: args.carriers,
-            content: BaseCurationApplication as ApplicationSection[],
-        };
-        this.data.set(newApp.id, newApp);
-        return newApp;
-    }
+  public create(args: ApplicationCreateArgs): Application {
+    const newApp = {
+      id: uuid(),
+      carriers: args.carriers,
+      content: BaseCurationApplication as ApplicationSection[],
+    };
+    this.data.set(newApp.id, newApp);
+    return newApp;
+  }
 
-    public update(args: ApplicationUpdateArgs): void {
-        console.log('HELLO2');
-        console.log(args);
-        this.data.set(args.application.id, args.application);
-        //error handling?
-    }
+  public update(args: ApplicationUpdateArgs): void {
+    this.data.set(args.application.id, args.application);
+    //error handling?
+  }
 
-    public getById(id: string): Application | null {
-        return this.data.get(id) ?? null;
-    }
+  public getById(id: string): Application | null {
+    return this.data.get(id) ?? null;
+  }
 
-    public getAll(): Application[] {
-        return [...this.data.values()];
-    }
+  public getAll(): Application[] {
+    return [...this.data.values()];
+  }
 }

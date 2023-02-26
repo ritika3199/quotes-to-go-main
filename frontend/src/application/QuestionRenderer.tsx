@@ -7,7 +7,6 @@ import {TextField} from "./TextField";
 import React, {useContext} from "react";
 import ApplicationContext from "../ApplicationContext";
 import {ApplicationSection} from "../../../shared-types";
-import {ContentCopy} from "@mui/icons-material";
 
 interface Props {
   currentSection: ApplicationSection;
@@ -18,39 +17,24 @@ interface Props {
 
 export const QuestionRenderer: React.VFC<Props> = (props) => {
   const {question} = props;
-  const application = useContext(ApplicationContext);
+  const {setQuestionAnswerCallback, questionToAnswers} =
+    useContext(ApplicationContext);
 
   const handleChange = (value: string) => {
-    const sectionIndex = application?.content.findIndex((section) => {
-      return section.id === props.currentSection.id;
+    setQuestionAnswerCallback({
+      questionId: question.id,
+      answer: value,
     });
-
-    const questionIndex = application.content[sectionIndex].children?.findIndex(
-      (nodes) => {
-        return nodes.type === "Question" && nodes.id === props.question.id;
-      }
-    );
-    application.content[sectionIndex].children?.map((node) => {
-      if (
-        node.type === "Question" &&
-        node.id === props.question.id &&
-        questionIndex
-      ) {
-        const content = application.content[sectionIndex];
-        if (content.children != null) {
-          content.children[questionIndex].userAnswer = value;
-        }
-      }
-    });
+    console.log(questionToAnswers);
   };
 
   const FieldComponent =
     question.componentType === "text" ? (
-      <TextField question={question} />
+      <TextField question={question} onChange={handleChange} />
     ) : question.componentType === "radioBoolean" ? (
       <RadioBooleanField question={question} onChange={handleChange} />
     ) : (
-      <SelectField question={question} />
+      <SelectField question={question} onChange={handleChange} />
     );
   return (
     <Box style={{...questionProps, marginLeft: `${props.depth * 40}px`}}>

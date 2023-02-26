@@ -7,7 +7,6 @@ import {
   RadioGroup,
 } from "@mui/material";
 import React from "react";
-
 const OPTIONS = [
   {
     label: "Yes",
@@ -31,7 +30,12 @@ export const RadioBooleanField: React.VFC<Props> = ({question, onChange}) => {
   return (
     <FormControl component="fieldset">
       <FormLabel className="question">{question.displayText}</FormLabel>
-      <RadioGroup id={question.id} row onChange={handleChange}>
+      <RadioGroup
+        id={question.id}
+        row
+        onChange={handleChange}
+        defaultValue={question.answer}
+      >
         {OPTIONS.map((option) => (
           <FormControlLabel
             key={option.label}
