@@ -116,14 +116,16 @@ export const MainContent: React.VFC<Props> = ({application, style}) => {
         <Typography variant="h1">Quotes To Go</Typography>
         <Typography variant="body1">Quotes You Can Take With You</Typography>
         <Box>{rootSections}</Box>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            handleSubmit(currentApp);
-          }}
-        >
-          Submit
-        </Button>
+        {currentApp != null && (
+          <Button
+            variant="outlined"
+            onClick={() => {
+              handleSubmit(currentApp);
+            }}
+          >
+            Submit
+          </Button>
+        )}
       </Box>
     </ApplicationContext.Provider>
   );
