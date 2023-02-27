@@ -26,12 +26,21 @@ interface Props {
 
 function getQuestionsFromNode(node: ApplicationNode): ApplicationQuestion[] {
   if (node.type === "Question" && node.children == null) {
+    //base case, what we really want, leaf nodes of type Question
     return [node];
   }
+  let localQuestions: ApplicationQuestion[] = [];
+  if (node.type === "Question") {
+    //any question nodes that aren't leafs
+    localQuestions.push(node);
+  }
+
   if (node.children == null) {
+    //not a question but has nothing under
     return [];
   }
-  let localQuestions: ApplicationQuestion[] = [];
+
+  //Node - (Section OR Question) with children
   node.children.forEach((childNode) => {
     localQuestions = [...localQuestions, ...getQuestionsFromNode(childNode)];
   });
@@ -48,8 +57,10 @@ export const MainContent: React.VFC<Props> = ({application, style}) => {
     } = {};
 
     application?.content.forEach((section) => {
+      //all nodes of type Question
       const nodes = getQuestionsFromNode(section);
       nodes.forEach((question) => {
+        console.log(question);
         questionToAnswersMap[question.id] = question.answer;
       });
     });
@@ -92,10 +103,8 @@ export const MainContent: React.VFC<Props> = ({application, style}) => {
   }, [questionsToAnswerMap, application]);
 
   const handleSubmit = (currentApp: Application) => {
-    console.log(currentApp);
-    console.log(constructAppStateForPost());
-    //TODO: Temp. Redo this
-    axios.post("/api/applications/update", {application: currentApp});
+    const appState = constructAppStateForPost();
+    axios.post("/api/applications/update", {application: appState});
   };
 
   return (

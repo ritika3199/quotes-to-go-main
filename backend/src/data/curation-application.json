@@ -96,7 +96,7 @@
             "displayText": "Number of Unmanned Aircraft",
             "type": "Question",
             "archived": false,
-            "componentType": "number",
+            "componentType": "text",
             "options": [],
             "conditions": [
               {
