@@ -5,13 +5,7 @@ import {
   ApplicationQuestion,
 } from "../../shared-types";
 import {SectionRenderer} from "./application/SectionRenderer";
-import React, {
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
-  useReducer,
-} from "react";
+import React, {useState, useMemo, useCallback, useReducer} from "react";
 import ApplicationContext, {
   QuestionAnswerActionT,
   QuestionAnswerMapT,
@@ -48,6 +42,7 @@ function getQuestionsFromNode(node: ApplicationNode): ApplicationQuestion[] {
 }
 
 export const MainContent: React.VFC<Props> = ({application, style}) => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const rootSections = application?.content.map((section) => (
     <SectionRenderer key={section.id} section={section} depth={0} />
   ));
@@ -104,7 +99,9 @@ export const MainContent: React.VFC<Props> = ({application, style}) => {
 
   const handleSubmit = (currentApp: Application) => {
     const appState = constructAppStateForPost();
-    axios.post("/api/applications/update", {application: appState});
+    axios.post("/api/applications/update", {application: appState}).then(() => {
+      setIsSubmitted(true);
+    });
   };
 
   return (
@@ -127,6 +124,11 @@ export const MainContent: React.VFC<Props> = ({application, style}) => {
           >
             Submit
           </Button>
+        )}
+        {isSubmitted && (
+          <Typography variant="body1">
+            Application submitted successfully!
+          </Typography>
         )}
       </Box>
     </ApplicationContext.Provider>
