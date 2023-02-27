@@ -24,10 +24,6 @@ interface Props {
   onSubmit: (application: Application) => void;
 }
 
-// function reducer(state: any, item: any) {
-//   return [...state, item];
-// }
-
 function getQuestionsFromNode(node: ApplicationNode): ApplicationQuestion[] {
   if (node.type === "Question" && node.children == null) {
     return [node];
@@ -37,12 +33,11 @@ function getQuestionsFromNode(node: ApplicationNode): ApplicationQuestion[] {
   }
   let localQuestions: ApplicationQuestion[] = [];
   node.children.forEach((childNode) => {
-    localQuestions.concat(getQuestionsFromNode(childNode));
+    localQuestions = [...localQuestions, ...getQuestionsFromNode(childNode)];
   });
   return localQuestions;
 }
 
-//create state here for Application
 export const MainContent: React.VFC<Props> = ({application, style}) => {
   const rootSections = application?.content.map((section) => (
     <SectionRenderer key={section.id} section={section} depth={0} />
@@ -53,7 +48,8 @@ export const MainContent: React.VFC<Props> = ({application, style}) => {
     } = {};
 
     application?.content.forEach((section) => {
-      getQuestionsFromNode(section).forEach((question) => {
+      const nodes = getQuestionsFromNode(section);
+      nodes.forEach((question) => {
         questionToAnswersMap[question.id] = question.answer;
       });
     });

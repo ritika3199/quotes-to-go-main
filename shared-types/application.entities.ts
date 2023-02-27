@@ -29,9 +29,6 @@ export interface ApplicationSection {
 
   // An array of ApplicationConditions is considered to be an AND filter
   conditions?: ApplicationCondition[];
-
-  // User entered input.
-  userAnswer?: string;
 }
 
 /*
