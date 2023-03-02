@@ -1,5 +1,4 @@
 import {createContext} from "react";
-import type {Application, ApplicationQuestion} from "../../shared-types";
 
 export type QuestionAnswerMapT = {[questionId: string]: string | undefined};
 export type QuestionAnswerActionT = {

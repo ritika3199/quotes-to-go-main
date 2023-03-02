@@ -25,7 +25,6 @@ export const QuestionRenderer: React.VFC<Props> = (props) => {
       questionId: question.id,
       answer: value,
     });
-    console.log(questionToAnswers);
   };
 
   const FieldComponent =

@@ -16,8 +16,6 @@ export default function App() {
   }, []);
 
   const handleSubmit = (currentApp: Application) => {
-    console.log(currentApp);
-    //TODO: Temp. Redo this
     axios.post("/api/applications/update", {application: currentApp});
   };
 

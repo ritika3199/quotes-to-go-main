@@ -8,14 +8,14 @@ import {
   SelectChangeEvent,
   SelectProps,
 } from "@mui/material";
-import React, {ReactNode} from "react";
+import React from "react";
 interface Props {
   question: ApplicationQuestion;
   onChange: (value: string) => void;
 }
 
 export const SelectField: React.VFC<Props> = ({question, onChange}) => {
-  const handleChange = (event: SelectChangeEvent<string>, child: ReactNode) => {
+  const handleChange = (event: SelectChangeEvent<string>) => {
     onChange(event.target.value);
   };
   return (

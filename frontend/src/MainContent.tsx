@@ -55,7 +55,6 @@ export const MainContent: React.VFC<Props> = ({application, style}) => {
       //all nodes of type Question
       const nodes = getQuestionsFromNode(section);
       nodes.forEach((question) => {
-        console.log(question);
         questionToAnswersMap[question.id] = question.answer;
       });
     });
@@ -97,7 +96,7 @@ export const MainContent: React.VFC<Props> = ({application, style}) => {
     return appLocal;
   }, [questionsToAnswerMap, application]);
 
-  const handleSubmit = (currentApp: Application) => {
+  const handleSubmit = () => {
     const appState = constructAppStateForPost();
     axios.post("/api/applications/update", {application: appState}).then(() => {
       setIsSubmitted(true);
@@ -119,7 +118,7 @@ export const MainContent: React.VFC<Props> = ({application, style}) => {
           <Button
             variant="outlined"
             onClick={() => {
-              handleSubmit(application);
+              handleSubmit();
             }}
           >
             Submit

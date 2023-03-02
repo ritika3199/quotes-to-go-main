@@ -34,7 +34,6 @@ export class ApplicationDataStore {
 
   public update(args: ApplicationUpdateArgs): void {
     this.data.set(args.application.id, args.application);
-    //error handling?
   }
 
   public getById(id: string): Application | null {
