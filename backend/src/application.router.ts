@@ -5,6 +5,7 @@ import {
   ApplicationUpdateArgs,
   ApplicationDataStore,
 } from "./application.datastore";
+const datastoreObject = require("./models/applicationSchema");
 
 export const applicationRouter = express.Router();
 
@@ -37,10 +38,12 @@ applicationRouter.post(
     req: Request<any, any, ApplicationCreateArgs>,
     res: Response<Application>
   ) => {
+    const newApplication = new datastoreObject(req.body);
     try {
+      await newApplication.save();
       const args = req.body;
-      const newApplication = datastore.create(args);
-
+      //   const newApplication = datastore.create(args);
+      console.log(newApplication);
       res.status(200).send(newApplication);
     } catch (e: any) {
       res.status(500).send(e.message);

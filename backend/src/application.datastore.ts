@@ -1,6 +1,7 @@
 import type {Application, ApplicationSection} from "../../shared-types";
 import {v4 as uuid} from "uuid";
 import BaseCurationApplication from "./data/curation-application.json";
+const datastoreObject = require("./models/applicationSchema");
 
 export interface ApplicationCreateArgs {
   carriers: string[];
@@ -28,13 +29,13 @@ export class ApplicationDataStore {
       carriers: args.carriers,
       content: BaseCurationApplication as ApplicationSection[],
     };
-    this.data.set(newApp.id, newApp);
+    // const object = new datastoreObject();
+    // this.data.set(newApp.id, newApp);
     return newApp;
   }
 
   public update(args: ApplicationUpdateArgs): void {
     this.data.set(args.application.id, args.application);
-    //error handling?
   }
 
   public getById(id: string): Application | null {

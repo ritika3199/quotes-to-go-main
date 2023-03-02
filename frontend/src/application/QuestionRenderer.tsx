@@ -19,6 +19,13 @@ export const QuestionRenderer: React.VFC<Props> = (props) => {
   const {question} = props;
   const {setQuestionAnswerCallback, questionToAnswers} =
     useContext(ApplicationContext);
+  // if (
+  //   props.question.conditions?.length > 0
+  // ) {
+  //   props.question.conditions?.forEach((condition) => {
+
+  //   })
+  // }
 
   const handleChange = (value: string) => {
     setQuestionAnswerCallback({
